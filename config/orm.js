@@ -18,7 +18,7 @@ var commands = {
 	},
 	updateOne: function(id) {
 		var query = 'UPDATE burgers SET devoured = ? WHERE id = ?';
-		connection.query(query, [ true, id ]function(err, res) {
+		connection.query(query, [ true, id ], function(err, res) {
 			if (err) throw err;
 			return res;
 		});

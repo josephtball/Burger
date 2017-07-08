@@ -2,6 +2,9 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var methodOverride = require("method-override");
+var exphbs = require('express-handlebars');
+
+var routes = require('./controllers/burgers_controller.js')
 
 // set port
 var port = process.env.port || 3030;
@@ -14,10 +17,13 @@ app.use(bodyParser.text());
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 // Override with POST having ?_method=DELETE
 app.use(methodOverride("_method"));
+// handlebars
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+app.set('view engine', 'handlebars');
 // set static folder
 app.use(express.static(__dirname + "/public"));
 
-
+app.use('/', routes);
 
 // setup server to listen
 app.listen(port, function() {
