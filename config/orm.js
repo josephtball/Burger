@@ -1,28 +1,40 @@
 var connection = require('./connection.js');
 
+function printQuestionMarks(num) {
+	var arr = [];
 
-var commands = {
-	selectAll: function() {
-		var query = 'SELECT * FROM burgers';
-		connection.query(query, function(err, res) {
+	for (var i = 0; i < num; i++) {
+		arr.push("?");
+	}
+
+	return arr.toString();
+}
+
+var orm = {
+	selectAll: function(table, cb) {
+		var queryString = 'SELECT * FROM ' + table + ';';
+		connection.query(queryString, function(err, result) {
 			if (err) throw err;
-			return res;
+			cb(result);
 		});
 	},
-	insertOne: function(newBurger) {
-		var query = 'INSERT INTO burgers (burger_name, devoured) VALUES (?,?)';
-		connection.query(query, [ newBurger, false ], function(err, res) {
+	insertOne: function(table, cols, vals, cb) { // cols and vals must be arrays
+		cols = cols.toString();
+		var questionMarks = printQuestionMarks(vals.length);
+
+		var queryString = 'INSERT INTO ' + table + ' (' + cols + ') VALUES (' + questionMarks + ')';
+		connection.query(queryString, vals, function(err, result) {
 			if (err) throw err;
-			return res;
+			cb(result);
 		});
 	},
 	updateOne: function(id) {
 		var query = 'UPDATE burgers SET devoured = ? WHERE id = ?';
-		connection.query(query, [ true, id ], function(err, res) {
+		connection.query(query, [ true, id ], function(err, result) {
 			if (err) throw err;
-			return res;
+			cb(result);
 		});
 	}
 };
 
-module.exports = commands;
+module.exports = orm;
