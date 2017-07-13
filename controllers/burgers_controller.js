@@ -7,13 +7,13 @@ var router = express.Router();
 router.get('/', function(req, res) {
 	burger.all(function(data) {
 		var hbsObj = {
-			burger: data
+			burgers: data
 		};
 		res.render('index', hbsObj);
 	});
 });
 router.post('/', function(req, res) {
-	burger.insert(['burger_name', 'devoured'], [req.body.burger_name, req.body.devoured], function() {
+	burger.insert(['burger_name'], [req.body.burger_name], function() {
 		res.redirect('/');
 	});
 });

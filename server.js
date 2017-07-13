@@ -3,9 +3,10 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var methodOverride = require("method-override");
 var exphbs = require('express-handlebars');
+var router = require('./controllers/burgers_controller.js');
 
 // set port
-var port = process.env.port || 3030;
+var port = process.env.port || 8080;
 
 // setup express
 var app = express();
@@ -21,7 +22,7 @@ app.set('view engine', 'handlebars');
 // set static folder
 app.use(express.static(__dirname + "/public"));
 
-require('./controllers/burgers_controller.js')(app);
+app.use('/', router);
 
 // setup server to listen
 app.listen(port, function() {

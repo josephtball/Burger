@@ -6,7 +6,7 @@ var burger = {
 			cb(result);
 		});
 	},
-	insert: function(cols, vals, cb) {
+	insert: function(cols, vals, cb) { // cols and vals must be arrays
 		orm.insertOne('burgers', cols, vals, function(result) {
 			cb(result);
 		});

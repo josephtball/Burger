@@ -5,7 +5,7 @@ CREATE TABLE burgers
 (
 	id int AUTO_INCREMENT NOT NULL,
 	burger_name varchar(255) NOT NULL,
-	devoured boolean NOT NULL,
+	devoured boolean NOT NULL DEFAULT 0,
 	date TIMESTAMP,
 	PRIMARY KEY(id)
 );
